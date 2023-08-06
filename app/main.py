@@ -11,6 +11,8 @@ def main():
     m = ProxyManager(settings.proxy.token, settings.proxy.url)
     proxies = m.get()
     proxy = random.choice(proxies)
+    del proxy["https"]
+
     logger.info(proxy)
     try:
         response = requests.get(settings.parsing.url, proxies=proxy)
