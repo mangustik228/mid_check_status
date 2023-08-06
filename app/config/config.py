@@ -30,11 +30,23 @@ class _Logs(BaseModel):
     path: str = datetime.now().strftime('logs/%Y_%m_%d_log.log')
 
 
+class _Parsing(BaseModel):
+    url: str = _config_ini.get("parsing", "url")
+
+
+class _Proxy(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="PROXY_")
+    url: str
+    token: int
+
+
 class _Settings(BaseSettings):
     MODE: Literal['dev', "test", "prod"] = 'dev'
     logs: _Logs = _Logs()
     name: str = _config_ini.get('default', 'name')
     telegram: _Telegram = _Telegram()
+    proxy: _Proxy = _Proxy()
+    parsing: _Parsing = _Parsing()
 
 
 settings = _Settings()
